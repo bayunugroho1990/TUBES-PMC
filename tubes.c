@@ -65,8 +65,13 @@ void list_print(lnodeT *root){
 */
 
 // Mas Bayu
+//Membuat struktur data untuk minterm
 struct mintermGroup{
-}; typedef struct mintermGroup mintermGroupT;
+	char *repr;
+	lnodeT* root;
+	unsigned int cPosBits;
+};
+typedef struct mintermGroup mintermGroupT;
 
 
 /*
@@ -76,11 +81,25 @@ struct mintermGroup{
 */ 
 
 // Mas Bayu
+//Menentukan nilai mana yang lebih besar (a atau b)
 int max(int a,int b){
+	if (a>b)
+        return a;
+    else
+        return b;
 }
 
-// Mas Bayu
+//Mengubah nilai biner pada Kmap
 void StrReverse(char *s){
+	int low = 0;
+	int high = strlen(s) - 1;
+	while(low < high){
+		char c = s[low];
+		s[low] = s[high];
+		s[high] = c;
+
+		low++;high--;
+	}
 }
 
 
@@ -90,12 +109,24 @@ void StrReverse(char *s){
 	============================================================= 
 */ 
 
-// Mas Bayu
+//Membandingkan nilai minterm dengan nilai Repr
 int CompareMintermsByRepr( const void *a , const void * b){
+	mintermGroupT *first  = (mintermGroupT *)a;
+	mintermGroupT *second = (mintermGroupT *)b;
+
+	if( first->cPosBits == second->cPosBits ){
+		return strcmp( first->repr, second->repr );
+	}
+
+	return (first->cPosBits - second->cPosBits);
 }
 
-// Mas Bayu
+//Membandingkan nilai minterm dengan dengan Id
 int CompareMintermsById( const void * a, const void * b){
+	mintermGroupT * first  = (mintermGroupT *)a;
+	mintermGroupT * second = (mintermGroupT *)b;
+
+	return ( first->root->id - second->root->id);
 }
 
 
